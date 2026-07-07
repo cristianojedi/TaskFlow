@@ -1,0 +1,11 @@
+services:
+  taskflow-api:
+    build: .
+    image: taskflow-api:local
+    ports:
+      - "8080:8080"
+    volumes:
+      - taskflow-data:/app/data
+
+volumes:
+  taskflow-data:

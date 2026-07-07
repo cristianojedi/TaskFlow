@@ -1,0 +1,17 @@
+bin/
+obj/
+**/bin/
+**/obj/
+.git/
+.vs/
+.vscode/
+.idea/
+*.db
+*.db-shm
+*.db-wal
+*.user
+[Tt]est[Rr]esult*/
+openspec/
+tests/
+README.md
+LICENSE
