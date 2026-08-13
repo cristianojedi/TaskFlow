@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskflow-api
+  labels:
+    app: taskflow-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: taskflow-api
+  template:
+    metadata:
+      labels:
+        app: taskflow-api
+    spec:
+      containers:
+        - name: taskflow-api
+          image: cristianojedi/taskflow-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: taskflow-data
+              mountPath: /app/data
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+      volumes:
+        - name: taskflow-data
+          persistentVolumeClaim:
+            claimName: taskflow-data-pvc
